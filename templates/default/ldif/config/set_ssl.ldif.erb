@@ -1,0 +1,13 @@
+dn: cn=config
+changetype: modify
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: <%= @cert %>
+-
+replace: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: <%= @key %>
+-
+replace: olcTLSCACertificateFile
+olcTLSCACertificateFile: <%= @cacert %>
+-
+replace: olcTLSVerifyClient
+olcTLSVerifyClient: <%= @verify %>

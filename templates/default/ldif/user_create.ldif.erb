@@ -1,0 +1,40 @@
+dn: cn=<%= @username %>,<%= @ou %>
+objectClass: top
+<% if @system -%>
+objectClass: account
+<% else -%>
+objectClass: inetOrgPerson
+<% end -%>
+objectClass: posixAccount
+objectClass: shadowAccount
+<% unless @system -%>
+objectClass: ldapPublicKey
+<% end -%>
+uid: <%= @username %>
+gecos: <%= @comment %>
+userPassword: <%= @ssha %>
+shadowLastChange: 15140
+shadowMin: 0
+shadowMax: 99999
+shadowWarning: 7
+loginShell: <%= @shell %>
+uidNumber: <%= @uid %>
+gidNumber: <%= @gid %>
+homeDirectory: <%= @home %>
+<% unless @system -%>
+cn: <%= @username %>
+<% if @first -%>
+givenName: Shawn
+<% end -%>
+<% if @last -%>
+sn: Catanzarite
+<% end -%>
+employeeType: 1
+<% if @keys -%>
+<% @keys.each do |key| -%>
+sshPublicKey:: <%= key %>
+<% end -%>
+<% else -%>
+sshPublicKey:: ssh key <%= @username %>@fake
+<% end -%>
+<% end %>

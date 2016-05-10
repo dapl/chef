@@ -1,0 +1,14 @@
+# First delete the already configured ACL at position {<%= @index %>}.
+dn: olcDatabase={1}hdb,cn=config
+changetype: modify
+delete: olcAccess
+olcAccess: {<%= @index %>}
+-
+# Then add a new ACL at position {0}.
+add: olcAccess
+olcAccess: {<%= @index %>}to <%= @what %>
+<% @list.each do |item| -%>
+  by <%= item[:who] %> <%= item[:access] %>
+<% end if @list && @list.count > 0 -%>
+
+# EOF

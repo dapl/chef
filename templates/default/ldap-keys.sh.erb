@@ -1,0 +1,12 @@
+#!/bin/bash
+# TODO: should probably do something here to sanitize dirty data
+user=$1
+/usr/bin/ldapsearch \
+    -o ldif-wrap=no \
+    -L -xZb"<%= node.dapl.basedn %>" \
+    -D <%= node.dapl.nss.base %> \
+    -w <%= node.dapl.nss.pass %> \
+    -H <%= node.dapl.nss.url %> \
+    "(&(objectClass=posixAccount)(uid=$user)(employeeType=1))" sshPublicKey | \
+    grep '^sshPublicKey:' | \
+    sed s/^sshPublicKey\:\ //

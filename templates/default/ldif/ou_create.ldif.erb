@@ -1,0 +1,6 @@
+dn: <%= @dn %>
+ou: <%= @ou %>
+<% @classes.each do |c| -%>
+objectClass: <%= c %>
+<% end -%>
+description: <%= @description %>
