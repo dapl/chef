@@ -24,10 +24,10 @@ homeDirectory: <%= @home %>
 <% unless @system -%>
 cn: <%= @username %>
 <% if @first -%>
-givenName: Shawn
+givenName: <%= @first %>
 <% end -%>
 <% if @last -%>
-sn: Catanzarite
+sn: <%= @last %>
 <% end -%>
 employeeType: 1
 <% if @keys -%>
