@@ -62,8 +62,13 @@ action :create do
   include_recipe 'apt::default'
   include_recipe 'apparmor::default'
 
+  template "#{node.dapl.preseed_dir}/slapd.seed" do
+    source 'slapd.seed.erb'
+    owner 'root'
+    group 'root'
+  end
+
   package 'slapd' do
-    response_file "slapd.seed.erb"
     action :install
   end
 
