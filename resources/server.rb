@@ -136,10 +136,12 @@ action :create do
 
   if is_primary
     dapl_ou 'users' do
+      base Dapl.config.basedn
       description 'Central location for UNIX users'
     end
 
     dapl_ou 'groups' do
+      base Dapl.config.basedn
       description 'Central location for UNIX groups'
     end
 

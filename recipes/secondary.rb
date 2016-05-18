@@ -23,12 +23,12 @@ if node['automation']
   # end
 end
 
-node.set.dapl.ssl.cacert = 'cacert.pem'
-node.set.dapl.ssl.certfile = 'ldap02.crt'
-node.set.dapl.ssl.keyfile = 'ldap02.key'
+Dapl.configure!(data_bag_item('dapl', 'server'))
+Dapl.config.ssl.cacert = 'cacert.pem'
+Dapl.config.ssl.certfile = 'ldap02.crt'
+Dapl.config.ssl.keyfile = 'ldap02.key'
 
 dapl_server 'secondary' do
-  config node.dapl
   primary 'ldap01.dapl.com'
   replication 0
 end

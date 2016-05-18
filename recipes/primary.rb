@@ -23,15 +23,15 @@ if node['automation']
   end
 end
 
-node.set.dapl.ssl.cacert = 'cacert.pem'
-node.set.dapl.ssl.certfile = 'ldap01.crt'
-node.set.dapl.ssl.keyfile = 'ldap01.key'
+Dapl.configure!(data_bag_item('dapl', 'server'))
+
+Dapl.config.ssl.cacert = 'cacert.pem'
+Dapl.config.ssl.certfile = 'ldap01.crt'
+Dapl.config.ssl.keyfile = 'ldap01.key'
 
 # cookbook_file '/root/generate_certificate.sh' do
 #   source 'generate_certificate.sh'
 #   mode 0755
 # end
 
-dapl_server 'primary' do
-  config node.dapl
-end
+dapl_server 'primary'

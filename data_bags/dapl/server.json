@@ -17,14 +17,14 @@
     "group": "openldap",
     "certs": "/etc/ssl/certs",
     "private": "/etc/ssl/private",
-    "cacert": "ca-certificates.crt",
+    "cacert": "ca-certificates.crt"
   },
   "dir": {
     "base": "/etc/ldap",
     "slapd": "/etc/ldap/slapd.d",
     "migrations": "/etc/ldap/migrations",
     "schema": "/etc/ldap/schema",
-    "certs": "/etc/ldap/certs",
+    "certs": "/etc/ldap/certs"
   },
   "ssl": {
     "tls": true,
@@ -33,16 +33,16 @@
     "cacert": null,
     "certfile": null,
     "keyfile": null,
-    "verify": "never",
+    "verify": "never"
   },
   "nss": {
     "base": "cn=nssproxy,ou=users,dc=dapl,dc=com",
     "pass": "blarg",
     "ssha": "{SSHA}EiAR459tQ0fzJOxdDE8GXzGHITeURbMz",
-    "url": "ldap://localhost",
+    "url": "ldap://localhost"
   },
   "duser": {
     "pass": "blarg",
-    "ssha": "{SSHA}QCiRa8LUt4AZipGcNQgnWcnJJaD1wfXZ",
+    "ssha": "{SSHA}QCiRa8LUt4AZipGcNQgnWcnJJaD1wfXZ"
   }
 }

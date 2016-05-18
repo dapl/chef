@@ -11,7 +11,7 @@
 
 property :name, String, name_property: true
 property :dn, String
-property :base, String, default: Dapl.config.basedn
+property :base, String #, default: Dapl.config.basedn
 property :objectClasses, Array, default: %w{top organizationalUnit}
 property :description, String
 
