@@ -4,7 +4,7 @@ maintainer_email 'me@shawncatz.com'
 license          'all_rights'
 description      'Installs/Configures dapl'
 long_description 'Installs/Configures dapl'
-version          '0.2.0'
+version          '0.2.1'
 
 supports 'ubuntu'
 

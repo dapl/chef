@@ -38,7 +38,7 @@ property :action, Symbol # defaults to :create if not specified
 def vars(r)
   {
       username: r.username,
-      ou: r.ou||node.dapl.users,
+      ou: r.ou||Dapl.config.users,
       comment: r.comment,
       ssha: r.ssha,
       shell: r.shell,
@@ -56,6 +56,6 @@ action :create do
   vars = vars(new_resource)
   dapl_ldif 'user_create' do
     variables vars
-    not_if "ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b #{node.dapl.basedn} dn | grep cn=#{vars[:username]},#{vars[:ou]}"
+    not_if "ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b #{Dapl.config.basedn} dn | grep cn=#{vars[:username]},#{vars[:ou]}"
   end
 end

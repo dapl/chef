@@ -1,17 +1,17 @@
 dn: olcDatabase={1}hdb,cn=config
 changetype: modify
 replace: olcSuffix
-olcSuffix: <%= node.dapl.basedn %>
+olcSuffix: <%= Dapl.config.basedn %>
 
 dn: olcDatabase={1}hdb,cn=config
 changetype: modify
 replace: olcRootDN
-olcRootDN: <%= "#{node.dapl.rootdn},#{node.dapl.basedn}" %>
+olcRootDN: <%= "#{Dapl.config.rootdn},#{Dapl.config.basedn}" %>
 
 dn: olcDatabase={1}hdb,cn=config
 changetype: modify
 replace: olcRootPW
-olcRootPW: <%= node.dapl.rootpw %>
+olcRootPW: <%= Dapl.config.rootpw %>
 
 # dn: olcDatabase={1}monitor,cn=config
 # changetype: modify

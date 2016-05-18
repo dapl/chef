@@ -62,8 +62,9 @@ action :create do
   include_recipe 'apt::default'
   include_recipe 'apparmor::default'
 
-  template "#{node.dapl.preseed_dir}/slapd.seed" do
+  template "#{Dapl.config.preseed_dir}/slapd.seed" do
     source 'slapd.seed.erb'
+    cookbook 'dapl'
     owner 'root'
     group 'root'
   end
@@ -78,28 +79,29 @@ action :create do
 
   template '/etc/ldap/ldap.conf' do
     source 'ldap.conf.erb'
+    cookbook 'dapl'
     mode 0644
   end
 
-  execute "slaptest -F #{node.dapl.dir.slapd}"
+  execute "slaptest -F #{Dapl.config.dir.slapd}"
 
   service 'slapd' do
     action [:enable, :start]
   end
 
-  directory node.dapl.dir.migrations do
-    owner node.dapl.system.user
-    group node.dapl.system.group
+  directory Dapl.config.dir.migrations do
+    owner Dapl.config.system.user
+    group Dapl.config.system.group
     mode 0700
   end
 
-  node.dapl.schema.each do |schema|
+  Dapl.config.schema.each do |schema|
     dapl_schema schema
   end
 
   directory '/var/lib/ldap/accesslog' do
-    owner node.dapl.system.user
-    group node.dapl.system.group
+    owner Dapl.config.system.user
+    group Dapl.config.system.group
   end
 
   execute 'cp /var/lib/ldap/DB_CONFIG /var/lib/ldap/accesslog' do
@@ -142,8 +144,8 @@ action :create do
     end
 
     dapl_user 'nssproxy' do
-      password node.dapl.nss.pass
-      ssha node.dapl.nss.ssha
+      password Dapl.config.nss.pass
+      ssha Dapl.config.nss.ssha
       comment 'Network Service Switch Proxy User'
       gid 801
       uid 801
@@ -153,8 +155,8 @@ action :create do
     end
 
     dapl_user 'duser' do
-      password node.dapl.duser.pass
-      ssha node.dapl.duser.ssha
+      password Dapl.config.duser.pass
+      ssha Dapl.config.duser.ssha
       comment 'Default User'
       first 'Default'
       last 'User'
@@ -172,16 +174,16 @@ action :create do
   if is_primary
     dapl_config 'set_repl_provider' do
       ldap_action 'add'
-      variables rootdn: "#{node.dapl.rootdn},#{node.dapl.basedn}"
+      variables rootdn: "#{Dapl.config.rootdn},#{Dapl.config.basedn}"
       # notifies :reload, 'service[slapd]', :delayed
     end
   else
     dapl_config 'set_repl_consumer' do
       ldap_action 'add'
-      variables rootdn: "#{node.dapl.rootdn},#{node.dapl.basedn}",
-                password: node.dapl.plainpw,
-                basedn: node.dapl.basedn,
-                ssl: node.dapl.ssl.tls,
+      variables rootdn: "#{Dapl.config.rootdn},#{Dapl.config.basedn}",
+                password: Dapl.config.plainpw,
+                basedn: Dapl.config.basedn,
+                ssl: Dapl.config.ssl.tls,
                 rid: replication,
                 primary: primary
     end

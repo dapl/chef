@@ -8,8 +8,8 @@ action :create do
   name = new_resource.name
   source = new_resource.source || "ldif/config/#{name}.ldif.erb"
   cookbook = new_resource.cookbook
-  file = "#{node.dapl.dir.migrations}/#{name}.ldif"
-  complete = "#{node.dapl.dir.migrations}/.#{name}.ldif"
+  file = "#{Dapl.config.dir.migrations}/#{name}.ldif"
+  complete = "#{Dapl.config.dir.migrations}/.#{name}.ldif"
   vars = new_resource.variables
 
   template file do

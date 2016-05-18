@@ -3,10 +3,10 @@
 user=$1
 /usr/bin/ldapsearch \
     -o ldif-wrap=no \
-    -L -xZb"<%= node.dapl.basedn %>" \
-    -D <%= node.dapl.nss.base %> \
-    -w <%= node.dapl.nss.pass %> \
-    -H <%= node.dapl.nss.url %> \
+    -L -xZb"<%= Dapl.config.basedn %>" \
+    -D <%= Dapl.config.nss.base %> \
+    -w <%= Dapl.config.nss.pass %> \
+    -H <%= Dapl.config.nss.url %> \
     "(&(objectClass=posixAccount)(uid=$user)(employeeType=1))" sshPublicKey | \
     grep '^sshPublicKey:' | \
     sed s/^sshPublicKey\:\ //

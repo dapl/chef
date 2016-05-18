@@ -1,3 +1,5 @@
+# require 'deep_struct'
+
 class Dapl
   class << self
     def command(action, user, pass=nil)
@@ -11,6 +13,14 @@ class Dapl
         cmd << '-Y EXTERNAL -Q -H ldapi:///'
       end
       cmd.join(' ')
+    end
+
+    def configure!(hash)
+      @config = DeepStruct.new(hash)
+    end
+
+    def config
+      @config
     end
   end
 end

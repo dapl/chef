@@ -6,7 +6,7 @@ action :create do
   schema = new_resource.name
   source = new_resource.source || "ldif/schema/#{schema}.ldif"
   cookbook = new_resource.cookbook
-  file = "#{node.dapl.dir.schema}/#{name}.ldif"
+  file = "#{Dapl.config.dir.schema}/#{name}.ldif"
 
   cookbook_file file do
     source source

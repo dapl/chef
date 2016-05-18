@@ -11,5 +11,5 @@ dapl_server 'primary' do
   config node.dapl
 end
 
-puts "node.dapl = "
-puts node.dapl.inspect
+puts "Dapl.config= "
+puts Dapl.config.inspect

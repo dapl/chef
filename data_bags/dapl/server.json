@@ -1,3 +1,48 @@
 {
-
+  "id": "server",
+  "domain": "dapl.com",
+  "organization": "dapl",
+  "basedn": "dc=dapl,dc=com",
+  "rootdn": "cn=admin",
+  "plainpw": "fuckyou",
+  "rootpw": "{SSHA}qPiMYtdHsah21JJgtP7CvVCoR/JzRCR6",
+  "schema": [
+    "openssh-lpk"
+  ],
+  "users": "ou=users,dc=dapl,dc=com",
+  "groups": "ou=groups,dc=dapl,dc=com",
+  "preseed_dir": "/var/cache/local/preseeding",
+  "system": {
+    "user": "openldap",
+    "group": "openldap",
+    "certs": "/etc/ssl/certs",
+    "private": "/etc/ssl/private",
+    "cacert": "ca-certificates.crt",
+  },
+  "dir": {
+    "base": "/etc/ldap",
+    "slapd": "/etc/ldap/slapd.d",
+    "migrations": "/etc/ldap/migrations",
+    "schema": "/etc/ldap/schema",
+    "certs": "/etc/ldap/certs",
+  },
+  "ssl": {
+    "tls": true,
+    "manage": true,
+    "cookbook": "dapl",
+    "cacert": null,
+    "certfile": null,
+    "keyfile": null,
+    "verify": "never",
+  },
+  "nss": {
+    "base": "cn=nssproxy,ou=users,dc=dapl,dc=com",
+    "pass": "blarg",
+    "ssha": "{SSHA}EiAR459tQ0fzJOxdDE8GXzGHITeURbMz",
+    "url": "ldap://localhost",
+  },
+  "duser": {
+    "pass": "blarg",
+    "ssha": "{SSHA}QCiRa8LUt4AZipGcNQgnWcnJJaD1wfXZ",
+  }
 }

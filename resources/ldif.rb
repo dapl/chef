@@ -36,7 +36,7 @@ action :create do
     notifies :delete, "template[#{file}]", :delayed
   end
 
-  # execute "ldapadd -w #{node.dapl.plainpw} -D #{node.dapl.rootdn},#{node.dapl.basedn} -f #{file}" do
+  # execute "ldapadd -w #{Dapl.config.plainpw} -D #{Dapl.config.rootdn},#{Dapl.config.basedn} -f #{file}" do
   execute "#{Dapl.command(:add, :root)} -f #{file}" do
     # notifies :restart, "service[slapd]", :delayed
   end

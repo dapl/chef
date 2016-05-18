@@ -12,32 +12,32 @@
 property :name, String, name_property: true
 
 action :create do
-  cert = node.dapl.ssl.certfile
-  priv = node.dapl.ssl.keyfile
-  cacert = node.dapl.ssl.cacert
-  verify = node.dapl.ssl.verify || 'never'
+  cert = Dapl.config.ssl.certfile
+  priv = Dapl.config.ssl.keyfile
+  cacert = Dapl.config.ssl.cacert
+  verify = Dapl.config.ssl.verify || 'never'
 
-  if node.dapl.ssl.manage
-    remote_directory node.dapl.dir.certs do
+  if Dapl.config.ssl.manage
+    remote_directory Dapl.config.dir.certs do
       source 'ssl'
-      owner node.dapl.system.user
-      group node.dapl.system.group
+      owner Dapl.config.system.user
+      group Dapl.config.system.group
       mode 0755
     end
 
-    file "#{node.dapl.dir.certs}/#{node.dapl.ssl.keyfile}" do
-      owner node.dapl.system.user
-      group node.dapl.system.group
+    file "#{Dapl.config.dir.certs}/#{Dapl.config.ssl.keyfile}" do
+      owner Dapl.config.system.user
+      group Dapl.config.system.group
       mode 0600
     end
 
     # node.set.ssl.certs_dir = dir
     # node.set.ssl.keys_dir = dir
-    # node.set.ssl.group = node.dapl.system.group
+    # node.set.ssl.group = Dapl.config.system.group
     #
     # directory dir do
-    #   owner node.dapl.system.user
-    #   group node.dapl.system.group
+    #   owner Dapl.config.system.user
+    #   group Dapl.config.system.group
     #   mode 0700
     # end
     #
@@ -80,52 +80,52 @@ action :create do
     #   end
     # end
 
-    # cookbook_file "#{node.dapl.system.certs}/#{cert}" do
+    # cookbook_file "#{Dapl.config.system.certs}/#{cert}" do
     #   source "ssl/#{cert}"
     #   owner 'root'
     #   group 'root'
     #   mode 0644
-    #   cookbook node.dapl.ssl.cookbook
+    #   cookbook Dapl.config.ssl.cookbook
     # end
     #
-    # cookbook_file "#{node.dapl.system.private}/#{priv}" do
+    # cookbook_file "#{Dapl.config.system.private}/#{priv}" do
     #   source "ssl/#{priv}"
     #   owner 'root'
     #   group 'root'
     #   mode 0600
-    #   cookbook node.dapl.ssl.cookbook
+    #   cookbook Dapl.config.ssl.cookbook
     # end
   end
 
-  # directory node.dapl.dir.certs do
-  #   owner node.dapl.system.user
-  #   group node.dapl.system.group
+  # directory Dapl.config.dir.certs do
+  #   owner Dapl.config.system.user
+  #   group Dapl.config.system.group
   #   mode 0700
   # end
 
-  # link "#{node.dapl.dir.certs}/cacert.crt" do
-  #   to "#{node.dapl.system.certs}/#{node.dapl.system.cacert}"
+  # link "#{Dapl.config.dir.certs}/cacert.crt" do
+  #   to "#{Dapl.config.system.certs}/#{Dapl.config.system.cacert}"
   # end
   #
-  # link "#{node.dapl.dir.certs}/#{cert}" do
-  #   to "#{node.dapl.system.certs}/#{cert}"
+  # link "#{Dapl.config.dir.certs}/#{cert}" do
+  #   to "#{Dapl.config.system.certs}/#{cert}"
   # end
   #
-  # link "#{node.dapl.dir.certs}/#{priv}" do
-  #   to "#{node.dapl.system.private}/#{priv}"
+  # link "#{Dapl.config.dir.certs}/#{priv}" do
+  #   to "#{Dapl.config.system.private}/#{priv}"
   #   link_type :hard
   # end
 
-  # file "#{node.dapl.dir.certs}/#{priv}" do
-  #   owner node.dapl.system.user
-  #   group node.dapl.system.group
+  # file "#{Dapl.config.dir.certs}/#{priv}" do
+  #   owner Dapl.config.system.user
+  #   group Dapl.config.system.group
   #   mode 0600
   # end
 
   dapl_config 'set_ssl' do
-    variables cert: "#{node.dapl.dir.certs}/#{cert}",
-              key: "#{node.dapl.dir.certs}/#{priv}",
-              cacert: "#{node.dapl.dir.certs}/#{cacert}",
+    variables cert: "#{Dapl.config.dir.certs}/#{cert}",
+              key: "#{Dapl.config.dir.certs}/#{priv}",
+              cacert: "#{Dapl.config.dir.certs}/#{cacert}",
               verify: verify
   end
 end

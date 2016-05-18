@@ -11,7 +11,7 @@
 
 property :name, String, name_property: true
 property :dn, String
-property :base, String, default: node.dapl.basedn
+property :base, String, default: Dapl.config.basedn
 property :objectClasses, Array, default: %w{top organizationalUnit}
 property :description, String
 
@@ -29,6 +29,6 @@ action :create do
   vars = vars(new_resource)
   dapl_ldif 'ou_create' do
     variables vars
-    not_if "ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b #{node.dapl.basedn} dn | grep #{vars[:dn]}"
+    not_if "ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b #{Dapl.config.basedn} dn | grep #{vars[:dn]}"
   end
 end
