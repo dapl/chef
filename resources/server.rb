@@ -130,7 +130,7 @@ action :create do
     # notifies :reload, 'service[slapd]', :delayed
   end
 
-  dapl_ssl 'dapl.com' do
+  dapl_ssl Dapl.config.domain do
     # notifies :reload, 'service[slapd]', :delayed
   end
 

@@ -11,7 +11,18 @@ ROOT='dapl.com'
 HOSTS=%w{ldap01.dapl.com ldap02.dapl.com}
 DAYS=3650
 
+SUBJ='/C=US/ST=California/L=San Francisco/O=ULIVE/OU=Operations/emailAdress=operations@ulive.com/CN'
+
 namespace :ssl do
+  desc 'Create CA key and cert to use to sign host certs, pass the root domain as a rake arg'
+  task :ca, [:domain] do |_, args|
+    domain = args.domain || raise('domain must be set')
+    dir = "/tmp/dapl-ca-#{$$}"
+    FileUtils.mkdir_p(dir)
+    puts "dir: #{dir}"
+    sh "openssl req -new -batch -subj '#{SUBJ}=#{domain}' -keyout #{dir}/cakey.pem -out #{dir}/careq.pem"
+    sh "openssl ca -create_serial -out #{dir}/cacert.pem -days 1095 -batch -keyfile #{dir}/cakey.pem -selfsign -extensions v3_ca -infiles #{dir}/careq.pem"
+  end
   task :create do
     dir = "/tmp/dapl-ssl-#{$$}"
     FileUtils.mkdir_p(dir)
@@ -21,7 +32,7 @@ namespace :ssl do
 
     ssh_config(ROOT)
     # create root CA
-    sh "openssl genrsa -out #{ROOT}.key 1024"
+    sh "openssl genrsa -des3 -out #{ROOT}.key 2048"
     sh "openssl req -config '#{dir}/#{ROOT}.cfg' -new -key #{ROOT}.key -out #{ROOT}.csr"
     sh "openssl x509 -req -days #{DAYS} -in #{ROOT}.csr -set_serial #{Time.now.to_i} -signkey #{ROOT}.key -out #{ROOT}.crt"
     # sh "openssl req -text -noout -verify -in #{ROOT}.crt > #{ROOT}.info"
